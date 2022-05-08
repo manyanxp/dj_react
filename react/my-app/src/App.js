@@ -1,32 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
+import Dashboard from './components/pages/Dashboard';
+import Graph from './components/pages/Graph';
 
-const client = new W3CWebSocket('ws://localhost:8000/ws/CarlaMessage');
-
-class App extends Component {
-
-    componentDidMount() {
-        client.onopen = () => {
-            console.log('WebSocket Client Connected')
-        };
-
-        client.onmessage = (message) => {
-            console.log(message)
-        };
-
-        client.onclose = (event) => {
-            console.log("close")
-        }
-    }
-
-  render() {
-    return (
-        <div>
-            Practical Intro To WebSockets.
-        </div>
+const App = () => {
+    return(
+        <Router>
+            <Routes>
+                <Route path="/" element={<Dashboard />} exact/> 
+                <Route path="/graph" element={<Graph />} />
+            </Routes>
+        </Router>
     );
-  }
 }
 
 export default App;
